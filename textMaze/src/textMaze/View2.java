@@ -19,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -33,59 +34,69 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class View2 extends Application implements EventHandler<ActionEvent>{
+public abstract class View2 extends Application implements EventHandler<ActionEvent>{
+
+	String Title = "Text Maze";
 
 	
-	private final String TITLE = "Text Maze V1.0";
-	Stage window;
-	Scene scene;
-	Button enter;
-	Button help;
-	private final int SCENE_WIDTH  = 750;
-	private final int SCENE_HEIGHT = 500;
-	
-	@Override
 	public void start(Stage primaryStage) throws Exception {
-						
-	primaryStage.setTitle(	TITLE );
-    
-	//building enter button and text field
-	enter = new Button("enter");
-	help = new Button("help");
-    
-	
-	
-	TextField in  = new TextField(); 
-	TextField in2 = new TextField();
-	Label ceanterdText = new Label("I want this text centered");
-	
-    HBox hbox = new HBox(help, enter);
-    
-   // hbox.getChildren().add(in);
-   // hbox.getChildren().add(in2);
-   
-   // This class will handle the button events
-    enter.setOnAction(this);
-   
-    Scene scene = new Scene(hbox, 300, 250);
-    primaryStage.setScene(scene);
-    primaryStage.show();
-}
+		// this will use a standard exception handler
 
-//When button is clicked, handle() gets called
-//Button click is an ActionEvent (also MouseEvents, TouchEvents, etc...)
-@Override
-public void handle(ActionEvent event) {
-	int click =0; 
-	if (event.getSource() == enter) {	
-		while(click <= 10) {
-		
-    System.out.println("click");
+		GridPane pane = new GridPane();
+		 pane.setAlignment(Pos.CENTER);
+		 pane.setHgap(5);
+		 pane.setVgap(5);
+		 pane.setPadding(new Insets(25,25,25,25)); // set top, right, bottom, left
+		 // this allows input fields to be placed in the window
+
+		 TextArea out = new TextArea("Type Here");
+		 out.setEditable(false);
+		 
+		TextField user_in = new TextField();
+
+
+
+
+		 out.setPrefColumnCount(14);
 	
-	click++;
-    		System.out.println(click);
-		}//end of while
-	}//end of if
-}//end of handle
+		user_in.setPrefColumnCount(10);
+		 // this sets the number of spaces in the text fields
+
+
+		 // these labels are set and used before the text fields as show below
+;
+		 pane.add(out, 1, 2);
+	
+		 pane.add(user_in, 1, 3);
+		 // call on the labels and text fields to be placed into the window
+		 // must be done individually so that location and order can be set by column/row
+
+		 Button calc_button = new Button("ENTER");
+		 Button help = new Button("Help Tab");
+		 Button lb = new Button("leaderboard tab");
+		 
+		
+		 
+		 pane.add(calc_button, 1, 6);
+		 pane.add(help, 2, 1);
+		 pane.add(lb, 1, 1);
+		 // make a button and put it in the Gridpane
+
+		 BorderPane borderPane = new BorderPane();
+		 borderPane.setCenter(pane);
+
+		 Scene scene = new Scene(borderPane, 500, 500);
+		 primaryStage.setTitle(Title);
+		 primaryStage.setScene(scene);
+		 primaryStage.show();
+
+		 calc_button.setOnAction(e -> {
+		 user_in.clear();
+		 
+		 });
+
+		}
+
+
 
 }//closing bracket
